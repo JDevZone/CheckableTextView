@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<declare-styleable name="CheckableTextView">
+		<attr name="ctv_IconTint" format="color"/>
+		<attr name="ctv_TextSize" format="dimension"/>
+		<attr name="ctv_TextColor" format="color"/>
+		<attr name="ctv_Text" format="string"/>
+		<attr name="ctv_TextStyle" format="reference|integer"/>
+		<attr name="ctv_Icon" format="reference|integer"/>
+		<attr name="ctv_IconChecked" format="boolean"/>
+	</declare-styleable>
+	
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rootRL"
+        android:layout_width="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/checkedTextTV"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/textColorDefault"
+            android:ellipsize="marquee"
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/checkedIV"
+            android:layout_margin="4dp"
+            android:padding="2dp"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_check_circle_vector"
+            android:layout_alignParentEnd="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+</RelativeLayout>
+
