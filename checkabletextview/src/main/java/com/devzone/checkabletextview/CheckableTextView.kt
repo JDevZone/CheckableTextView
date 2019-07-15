@@ -141,6 +141,7 @@ class CheckableTextView : RelativeLayout {
     }
 
     interface CheckedListener {
+
         fun onCheckChange(view: View, isChecked: Boolean)
     }
 }
