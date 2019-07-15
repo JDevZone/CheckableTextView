@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:padding="8dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    <com.devzone.checkabletextview.CheckableTextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/checkedTV"
+            app:ctv_TextStyle="@style/TextAppearance.General"
+            app:ctv_IconTint="@color/colorPrimary"
+            app:ctv_IconChecked="true"
+            app:ctv_Text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/stateTV"
+            android:text="Checked"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            style="@style/TextAppearance.General"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <com.devzone.checkabletextview.CheckableTextView
+            android:layout_marginTop="20dp"
+            android:background="#e8e8e8"
+            android:id="@+id/checkedSecondTV"
+            app:ctv_TextStyle="@style/TextAppearance.General"
+            app:ctv_IconTint="@color/colorAccent"
+            app:ctv_IconChecked="true"
+            app:ctv_Icon="@drawable/ic_cancel_custom_vector"
+            app:ctv_Text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/stateSecondTV"
+            android:text="Checked"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            style="@style/TextAppearance.General"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
