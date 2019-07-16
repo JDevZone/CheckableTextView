@@ -1,12 +1,14 @@
 # CheckableTextView
 
 <a href="https://github.com/JDevZone/CheckableTextView">
-<img align="left" src="https://github.com/JDevZone/CheckableTextView/blob/master/sample.gif" width="480" height="240" /></a>
+<img align="left" src="https://github.com/JDevZone/CheckableTextView/blob/master/sample.gif" width="450" height="220" /></a>
 
 <p><h1 align="left">Checkable TextView [KOTLIN]</h1></p>
 
 <h4>A simple and flexible Checked TextView or Checkable TextView written in Kotlin</h4>
 
+
+[![](https://jitpack.io/v/JDevZone/CheckableTextView.svg)](https://jitpack.io/#JDevZone/CheckableTextView)
 ___
 
 
