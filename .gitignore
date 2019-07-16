@@ -10,7 +10,6 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
-/gradle
 /gradlew
 /gradlew.bat
 /captures
