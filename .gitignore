@@ -10,8 +10,6 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
-/gradlew
-/gradlew.bat
 /captures
 /.idea
 .externalNativeBuild
