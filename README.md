@@ -26,7 +26,7 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency in app gradle
 
 	dependencies {
-	        implementation 'com.github.JDevZone:CheckableTextView:1.0.1'
+	        implementation 'com.github.JDevZone:CheckableTextView:1.0.2'
 	}
 
 ## Basic usage
