@@ -14,24 +14,27 @@ ___
 
 ## Installation
 
-Add it in your root build.gradle at the end of repositories:
-
+1. Add it in your root build.gradle at the end of repositories:
+```groovy
 	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
 		}
 	}
-  
-Step 2. Add the dependency in app gradle
+```
 
+
+2. Add the dependency in app gradle
+
+```groovy
 	dependencies {
 	        implementation 'com.github.JDevZone:CheckableTextView:{latest_version}'
 	}
-
+```
 ## Basic usage
 
-```
+```xml
 <com.devzone.checkabletextview.CheckableTextView
             android:layout_marginTop="20dp"
             android:background="#e8e8e8"
@@ -45,11 +48,11 @@ Step 2. Add the dependency in app gradle
 ```  
 ## Listen State Changes
 You can listen to state changes by registering a listener like as follows :
-```
+```kotlin
 checkedTV.setOnCheckChangeListener()
 ```
 and get callback in implemented method :
-```
+```kotlin
 override fun onCheckChange(view: View, isChecked: Boolean) {
         // checkedTV returned as view
         // isChecked current state of the view
