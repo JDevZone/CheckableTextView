@@ -8,10 +8,11 @@
 <h4>A simple and flexible Checked TextView or Checkable TextView written in Kotlin</h4>
 
 
+
 [![](https://jitpack.io/v/JDevZone/CheckableTextView.svg)](https://jitpack.io/#JDevZone/CheckableTextView)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Generic%20Dialog-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7770)
+
 ___
-
-
 ## Installation
 
 1. Add it in your root build.gradle at the end of repositories:
