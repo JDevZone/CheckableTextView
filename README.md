@@ -13,7 +13,7 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Generic%20Dialog-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7770)
 
 ___
-## Installation
+### Installation
 
 1. Add it in your root build.gradle at the end of repositories:
 ```groovy
@@ -33,7 +33,7 @@ ___
 	        implementation 'com.github.JDevZone:CheckableTextView:{latest_version}'
 	}
 ```
-## Basic usage
+### Basic usage
 
 ```xml
 <com.devzone.checkabletextview.CheckableTextView
@@ -46,8 +46,24 @@ ___
             app:ctv_Text="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-```  
-## Listen State Changes
+``` 
+### Change State Programatically
+You can change checked state as follows :
+```kotlin
+checkedTV.setChecked(isChecked)
+
+// default value `shouldNotifyListeners` is false
+
+//or
+checkedTV.setChecked(isChecked,shouldNotifyListeners)
+
+// First Boolean parameter `isChecked` sets the current state
+// Second Boolean parameter `shouldNotifyListeners` determines
+//if `onCheckChange` method should be Called or Not
+
+```
+
+### Listen State Changes
 You can listen to state changes by registering a listener like as follows :
 ```kotlin
 checkedTV.setOnCheckChangeListener()
@@ -60,7 +76,7 @@ override fun onCheckChange(view: View, isChecked: Boolean) {
     }
 ```
 
-## Customisation
+### Customisation
 
 Here are the attributes you can specify through XML or related setters:
 * `ctv_Text` - Set text.
@@ -71,7 +87,7 @@ Here are the attributes you can specify through XML or related setters:
 * `ctv_IconTint` - Set icon tint.
 * `ctv_IconChecked` - Set textView state checked.
 
-## 📄 License
+### 📄 License
 
 Checkable TextView is released under the MIT license.
 See [LICENSE](./LICENSE) for details.
