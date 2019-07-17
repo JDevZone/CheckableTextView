@@ -51,19 +51,21 @@ ___
 You can change checked state as follows :
 ```kotlin
 checkedTV.setChecked(isChecked)
-
-// default value `shouldNotifyListeners` is false
-
-//or
-checkedTV.setChecked(isChecked,shouldNotifyListeners)
-
-// First Boolean parameter `isChecked` sets the current state
-// Second Boolean parameter `shouldNotifyListeners` determines
-//if `onCheckChange` method should be Called or Not
-
 ```
+Default value `shouldNotifyListeners` is false
+
+***or***
+
+```kotlin
+checkedTV.setChecked(isChecked,shouldNotifyListeners)
+```
+ First Boolean parameter `isChecked` sets the current state
+ Second Boolean parameter `shouldNotifyListeners` determines
+ if `onCheckChange` method should be called or not.
+
 
 ### Listen State Changes
+
 You can listen to state changes by registering a listener like as follows :
 ```kotlin
 checkedTV.setOnCheckChangeListener()
