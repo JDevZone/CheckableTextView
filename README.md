@@ -5,12 +5,12 @@
 
 <p><h1 align="left">Checkable TextView [KOTLIN]</h1></p>
 
-<h4>A simple and flexible Checked TextView or Checkable TextView written in Kotlin</h4>
+<h4>:zap:A simple and flexible Checked TextView or Checkable TextView written in Kotlin:zap:</h4>
 
 
 
 [![](https://jitpack.io/v/JDevZone/CheckableTextView.svg)](https://jitpack.io/#JDevZone/CheckableTextView)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Generic%20Dialog-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7770)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Checkable%20TextView-orange.svg?style=flat)](https://android-arsenal.com/details/1/7770)
 
 ___
 ### Installation
