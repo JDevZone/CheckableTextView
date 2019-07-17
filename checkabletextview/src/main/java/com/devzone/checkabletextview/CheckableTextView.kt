@@ -79,7 +79,11 @@ class CheckableTextView : RelativeLayout {
         }
 
         animateView(checkedIV, isChecked)
-        rootRL.setOnClickListener {
+        rootRL.setOnClickListener(clickListener())
+    }
+
+    private fun clickListener(): (v: View) -> Unit {
+        return {
             checkedTextTV.text = checkedTextTV.text
             checkedTextTV.isSelected = true
             isChecked = !isChecked
@@ -87,7 +91,6 @@ class CheckableTextView : RelativeLayout {
             notifyListener(isChecked)
         }
     }
-
     private fun applyTextStyle(textStyle: Int, context: Context) {
         if (isValidRes(textStyle)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -125,19 +128,40 @@ class CheckableTextView : RelativeLayout {
         listener?.onCheckChange(this, isChecked)
     }
 
+
+    private fun getRippleDrawable(): Int {
+        val outValue = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+        return outValue.resourceId
+    }
+
+
+    /*-------------------------------------------------public functions------------------------------------------------------------------------------------------*/
+
+
+    fun setClickEnabled(isClickable: Boolean) {
+        // 0.5 second delay added to ongoing ripple animation to complete (if any)
+        rootRL.postDelayed(
+            { rootRL.setBackgroundResource(if (isClickable) getRippleDrawable() else android.R.color.transparent) },
+            500
+        )
+        rootRL.setOnClickListener(if (isClickable) clickListener() else null)
+    }
+
     fun setOnCheckChangeListener(listener: CheckedListener) {
         this.listener = listener
     }
 
-    fun setChecked(isChecked: Boolean, shouldNotifyListeners: Boolean) {
+    fun setChecked(isChecked: Boolean, shouldNotifyListeners: Boolean=false) {
         this.isChecked = isChecked
         animateView(checkedIV, isChecked)
         if (shouldNotifyListeners)
             notifyListener(isChecked)
     }
 
-    fun setChecked(isChecked: Boolean) {
-        setChecked(isChecked, false)
+
+    fun isChecked(): Boolean {
+        return this.isChecked
     }
 
     interface CheckedListener {
