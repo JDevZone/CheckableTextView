@@ -1,3 +1,4 @@
+[![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
 
 <div align="center">
   <img src="https://github.com/JDevZone/CheckableTextView/blob/master/logo.png" alt="" width="70px" height="70px">
@@ -5,12 +6,6 @@
 
 <h3 align="center">CheckableTextView</h3>
 
-<p align="center">
-	
-[![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
-![GitHub release](https://img.shields.io/github/release/JDevZone/CheckableTextView.svg)
-	
-</p>
 
 --------------
 <a href="https://github.com/JDevZone/CheckableTextView">
