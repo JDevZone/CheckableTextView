@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.annotation.RestrictTo
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.layout_checkable_text.view.*
@@ -139,6 +140,12 @@ class CheckableTextView : RelativeLayout {
     /*-------------------------------------------------public functions------------------------------------------------------------------------------------------*/
 
 
+
+    /**
+     * Change [CheckableTextView] click state
+     * @param isClickable = pass true for enable clicks and false for disable clicks.
+     */
+    @RestrictTo(RestrictTo.Scope.TESTS)
     fun setClickEnabled(isClickable: Boolean) {
         // 0.5 second delay added to ongoing ripple animation to complete (if any)
         rootRL.postDelayed(
