@@ -6,8 +6,10 @@
 <h3 align="center">CheckableTextView</h3>
 
 <p align="center">
+	
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
 ![GitHub release](https://img.shields.io/github/release/JDevZone/CheckableTextView.svg)
+	
 </p>
 
 --------------
