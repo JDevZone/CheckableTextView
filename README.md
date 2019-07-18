@@ -3,9 +3,14 @@
   <img src="https://github.com/JDevZone/CheckableTextView/blob/master/logo.png" alt="" width="70px" height="70px">
 </div>
 <h3 align="center">CheckableTextView</h3>
-</br>
+
+
+[![GitHub release](https://img.shields.io/github/release/JDevZone/CheckableTextView.svg?style=flat)](https://jitpack.io/#JDevZone/CheckableTextView)
+
+
+--------------
 <a href="https://github.com/JDevZone/CheckableTextView">
-<img align="left" src="https://github.com/JDevZone/CheckableTextView/blob/master/sample.gif" width="450" height="220" /></a>
+<img align="left" src="https://github.com/JDevZone/CheckableTextView/blob/master/sample.gif" width="400" height="200" /></a>
 
 <p><h1 align="left">Checkable TextView [KOTLIN]</h1></p>
 
@@ -15,8 +20,9 @@
 
 [![](https://jitpack.io/v/JDevZone/CheckableTextView.svg)](https://jitpack.io/#JDevZone/CheckableTextView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Checkable%20TextView-orange.svg?style=flat)](https://android-arsenal.com/details/1/7770)
+[![GitHub license](https://img.shields.io/github/license/JDevZone/CheckableTextView.svg?style=flat)](https://github.com/JDevZone/CheckableTextView/blob/master/LICENSE)
 
-___
+---------------------------
 ### Installation
 
 1. Add it in your root build.gradle at the end of repositories:
