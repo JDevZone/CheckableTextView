@@ -1,5 +1,9 @@
-# CheckableTextView
 
+<div align="center">
+  <img src="https://github.com/JDevZone/CheckableTextView/blob/master/logo.png" alt="" width="70px" height="70px">
+</div>
+<h3 align="center">CheckableTextView</h3>
+</br>
 <a href="https://github.com/JDevZone/CheckableTextView">
 <img align="left" src="https://github.com/JDevZone/CheckableTextView/blob/master/sample.gif" width="450" height="220" /></a>
 
