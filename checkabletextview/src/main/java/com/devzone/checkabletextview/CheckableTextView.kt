@@ -145,7 +145,7 @@ class CheckableTextView : RelativeLayout {
      * Change [CheckableTextView] click state
      * @param isClickable = pass true for enable clicks and false for disable clicks.
      */
-    @RestrictTo(RestrictTo.Scope.TESTS)
+    @RestrictTo(RestrictTo.Scope.LIBRARY)
     fun setClickEnabled(isClickable: Boolean) {
         // 0.5 second delay added to ongoing ripple animation to complete (if any)
         rootRL.postDelayed(
