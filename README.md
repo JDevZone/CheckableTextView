@@ -5,7 +5,10 @@
 <h3 align="center">CheckableTextView</h3>
 
 
-[![GitHub release](https://img.shields.io/github/release/JDevZone/CheckableTextView.svg?style=flat)](https://jitpack.io/#JDevZone/CheckableTextView)
+[![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
+![GitHub release](https://img.shields.io/github/release/JDevZone/CheckableTextView.svg)
+
+
 
 
 --------------
