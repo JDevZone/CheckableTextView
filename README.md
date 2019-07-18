@@ -7,7 +7,7 @@
 
 --------------
 <a href="https://github.com/JDevZone/CheckableTextView">
-<img align="left" src="https://github.com/JDevZone/CheckableTextView/blob/master/sample.gif" width="400" height="200" /></a>
+<img align="left" src="https://github.com/JDevZone/CheckableTextView/blob/master/sample.gif" width="400" height="180" /></a>
 
 <p><h1 align="left">Checkable TextView [KOTLIN]</h1></p>
 
@@ -18,7 +18,6 @@
 [![](https://jitpack.io/v/JDevZone/CheckableTextView.svg)](https://jitpack.io/#JDevZone/CheckableTextView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Checkable%20TextView-orange.svg?style=flat)](https://android-arsenal.com/details/1/7770)
 [![GitHub license](https://img.shields.io/github/license/JDevZone/CheckableTextView.svg?style=flat)](https://github.com/JDevZone/CheckableTextView/blob/master/LICENSE)
-
 
 ---------------------------
 ### Installation
