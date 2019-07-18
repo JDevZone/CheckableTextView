@@ -48,6 +48,7 @@ ___
             android:layout_height="wrap_content"/>
 ``` 
 ### Change State Programatically
+
 You can change checked state as follows :
 ```kotlin
 checkedTV.setChecked(isChecked)
@@ -62,7 +63,12 @@ checkedTV.setChecked(isChecked,shouldNotifyListeners)
  First Boolean parameter `isChecked` sets the current state
  Second Boolean parameter `shouldNotifyListeners` determines
  if `onCheckChange` method should be called or not.
-
+ 
+### Get Current State
+```kotlin
+checkedTV.isChecked()
+```
+No Fancy enums, Just true for checked state and false for unchecked is returned
 
 ### Listen State Changes
 
@@ -77,6 +83,16 @@ override fun onCheckChange(view: View, isChecked: Boolean) {
         // isChecked current state of the view
     }
 ```
+
+### Experimental
+
+```kotlin
+checkedTV.setClickEnabled(isClickable: Boolean)
+```
+Pass `isClickable` true for enable and false for disable clicks
+
+> currently restricted to `RestrictTo.Scope.TESTS`
+> you can use it simply Suppressing Lint Warnings (if have any) as `@SuppressLint("RestrictedApi")`
 
 ### Customisation
 
