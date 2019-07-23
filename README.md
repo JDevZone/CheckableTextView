@@ -110,8 +110,8 @@ Here are the attributes you can specify through XML or related setters:
 * `ctv_TextStyle` - Set text style.
 * `ctv_Icon` - Set custom icon.
 * `ctv_IconTint` - Set icon tint.
-* `ctv_IconChecked` - Set textView state checked.
-* `ctv_TextGravity` - Set textView gravity.
+* `ctv_IconChecked` - Set TextView (`CheckableTextView`) state checked.
+* `ctv_TextGravity` - Set text gravity.
 
 ### 📄 License
 
