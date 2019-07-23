@@ -98,7 +98,7 @@ checkedTV.setClickEnabled(isClickable: Boolean)
 ```
 Pass `isClickable` true for enable and false for disable clicks
 
-> currently restricted to `RestrictTo.Scope.TESTS`
+> currently restricted to `RestrictTo.Scope.LIBRARY`
 > you can use it simply Suppressing Lint Warnings (if have any) as `@SuppressLint("RestrictedApi")`
 
 ### Customisation
