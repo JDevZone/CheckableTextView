@@ -6,10 +6,11 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
-import androidx.annotation.RestrictTo
+import androidx.annotation.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.layout_checkable_text.view.*
@@ -49,33 +50,37 @@ class CheckableTextView : RelativeLayout {
                 this, true)
         attributeSet.let {
             val array: TypedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CheckableTextView)
-            val iconTint = array.getColor(
-                R.styleable.CheckableTextView_ctv_IconTint,
-                ContextCompat.getColor(context, defaultIconTintColor)
-            )
-            val textColor = array.getColor(
-                R.styleable.CheckableTextView_ctv_TextColor,
-                ContextCompat.getColor(context, defaultTextColor)
-            )
-            val text = array.getString(R.styleable.CheckableTextView_ctv_Text)
-            isChecked = array.getBoolean(R.styleable.CheckableTextView_ctv_IconChecked, false)
-            val textSize = array.getDimensionPixelSize(R.styleable.CheckableTextView_ctv_TextSize, 0)
-            val textStyle = array.getResourceId(R.styleable.CheckableTextView_ctv_TextStyle, 0)
-            checkIcon = array.getResourceId(R.styleable.CheckableTextView_ctv_Icon, 0)
+            if (array.length() > 0) {
+                val iconTint = array.getColor(
+                    R.styleable.CheckableTextView_ctv_IconTint,
+                    ContextCompat.getColor(context, defaultIconTintColor)
+                )
+                val textColor = array.getColor(
+                    R.styleable.CheckableTextView_ctv_TextColor,
+                    ContextCompat.getColor(context, defaultTextColor)
+                )
+                val text = array.getString(R.styleable.CheckableTextView_ctv_Text)
+                isChecked = array.getBoolean(R.styleable.CheckableTextView_ctv_IconChecked, false)
+                val textSize = array.getDimensionPixelSize(R.styleable.CheckableTextView_ctv_TextSize, 0)
+                val textStyle = array.getResourceId(R.styleable.CheckableTextView_ctv_TextStyle, 0)
+                checkIcon = array.getResourceId(R.styleable.CheckableTextView_ctv_Icon, 0)
+                val gravity = array.getInt(R.styleable.CheckableTextView_ctv_TextGravity, Gravity.CENTER)
 
-            //giving applied style attrs least preference (colors n text size will be override by ctv_TextColor & ctv_TextSize as applied later)
-            applyTextStyle(textStyle, context)
-            validateCheckIcon(context)
-            checkedTextTV.text = text
-            checkedTextTV.isSelected = true
-            checkedTextTV.setTextColor(textColor)
-            checkedIV.setImageResource(checkIcon)
+                //giving applied style attrs least preference (colors n text size will be override by ctv_TextColor & ctv_TextSize as applied later)
+                applyTextStyle(textStyle, context)
+                validateCheckIcon(context)
+                checkedTextTV.text = text
+                checkedTextTV.isSelected = true
+                checkedTextTV.gravity = gravity
+                checkedTextTV.setTextColor(textColor)
+                checkedIV.setImageResource(checkIcon)
 
-            if (isValidRes(textSize))
-                checkedTextTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
-            if (isValidRes(iconTint))
-                checkedIV.setColorFilter(iconTint)
+                if (isValidRes(textSize))
+                    checkedTextTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
+                if (isValidRes(iconTint))
+                    checkedIV.setColorFilter(iconTint)
 
+            }
             array.recycle()
         }
 
@@ -124,6 +129,7 @@ class CheckableTextView : RelativeLayout {
 
 
     private fun isValidRes(res: Int) = res != 0
+    private fun emptyNullCheck(text: String?) = text != null && !text.isBlank();
 
     private fun notifyListener(isChecked: Boolean) {
         listener?.onCheckChange(this, isChecked)
@@ -171,7 +177,56 @@ class CheckableTextView : RelativeLayout {
         return this.isChecked
     }
 
-    interface CheckedListener {
-        fun onCheckChange(view: View, isChecked: Boolean)
+
+    ////---------------------------setters------------------------------------------------------------------------------------------////
+
+    fun setIconTint(@ColorRes resId: Int) {
+        if (isValidRes(resId)) {
+            val color = ContextCompat.getColor(context, resId)
+            checkedIV.setColorFilter(color)
+        }
+    }
+
+    fun setTextSize(@DimenRes resId: Int) {
+        if (isValidRes(resId)) {
+            val dimension = resources.getDimensionPixelSize(resId)
+            checkedTextTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimension.toFloat())
+        }
+    }
+
+    fun setTextColor(@ColorRes resId: Int) {
+        if (isValidRes(resId)) {
+            val color = ContextCompat.getColor(context, resId)
+            checkedTextTV.setTextColor(color)
+        }
+    }
+
+    fun setText(@StringRes resId: Int) {
+        if (isValidRes(resId)) {
+            val string = context.getString(resId)
+            setText(string)
+        }
+    }
+
+    fun setText(text: String) {
+        if (emptyNullCheck(text))
+            checkedTextTV.text = text
+    }
+
+    fun setTextGravity(gravity: Int) {
+        checkedTextTV.gravity = gravity
+    }
+
+    fun setIcon(@DrawableRes resId: Int) {
+        if (isValidRes(resId)) {
+            checkIcon = resId
+            validateCheckIcon(context)
+            checkedIV.setImageResource(checkIcon)
+        }
+    }
+
+    fun setTextStyle(@StyleRes resId: Int) {
+        if (isValidRes(resId))
+            applyTextStyle(resId, context)
     }
 }
