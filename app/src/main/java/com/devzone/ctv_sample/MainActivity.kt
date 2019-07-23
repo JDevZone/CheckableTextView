@@ -3,11 +3,11 @@ package com.devzone.ctv_sample
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.devzone.checkabletextview.CheckableTextView
+import com.devzone.checkabletextview.CheckedListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), CheckableTextView.CheckedListener {
+class MainActivity : AppCompatActivity(), CheckedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
