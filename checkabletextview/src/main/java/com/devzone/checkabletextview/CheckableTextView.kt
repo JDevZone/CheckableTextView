@@ -18,12 +18,21 @@ import kotlinx.android.synthetic.main.layout_checkable_text.view.*
 
 class CheckableTextView : RelativeLayout {
 
+
+    companion object {
+        const val SCALE = 0
+        const val TRANSLATE = 1
+    }
+
+    private val defaultAnimDuration: Long = 250
     private var isChecked: Boolean = true
     private var listener: CheckedListener? = null
     private val defaultCheckIcon = R.drawable.ic_check_circle_vector
     private val defaultTextColor = android.R.color.black
     private val defaultIconTintColor = android.R.color.transparent
     private var checkIcon = defaultCheckIcon
+    private var animateStyle = SCALE
+    private var animDuration: Long = defaultAnimDuration
 
     constructor(context: Context) : super(context) {
         init(context, null)
@@ -65,13 +74,16 @@ class CheckableTextView : RelativeLayout {
                 val textStyle = array.getResourceId(R.styleable.CheckableTextView_ctv_TextStyle, 0)
                 checkIcon = array.getResourceId(R.styleable.CheckableTextView_ctv_Icon, 0)
                 val gravity = array.getInt(R.styleable.CheckableTextView_ctv_TextGravity, Gravity.CENTER)
+                animateStyle = array.getInt(R.styleable.CheckableTextView_ctv_AnimType, SCALE)
+                val animDuration =
+                    array.getInt(R.styleable.CheckableTextView_ctv_AnimDuration, defaultAnimDuration.toInt()).toLong()
+                setAnimDuration(animDuration)
 
                 //giving applied style attrs least preference (colors n text size will be override by ctv_TextColor & ctv_TextSize as applied later)
                 applyTextStyle(textStyle, context)
                 validateCheckIcon(context)
-                checkedTextTV.text = text
-                checkedTextTV.isSelected = true
-                checkedTextTV.gravity = gravity
+                setText(text ?: "")
+                setTextGravity(gravity)
                 checkedTextTV.setTextColor(textColor)
                 checkedIV.setImageResource(checkIcon)
 
@@ -109,10 +121,27 @@ class CheckableTextView : RelativeLayout {
 
     private fun animateView(view: View, show: Boolean) {
         view.clearAnimation()
-        val scale = if (show) 1f else 0f
-        val rotation = if (show) 360f else -360f
-        view.animate().setStartDelay(20).scaleX(scale).scaleY(scale).rotation(rotation).setDuration(250)
-            .start()
+
+        when (animateStyle) {
+            SCALE -> {
+                view.translationX = 0f
+                val scale = if (show) 1f else 0f
+                val rotation = if (show) 0f else -360f
+                view.animate().setStartDelay(20).scaleX(scale).scaleY(scale).rotation(rotation)
+                    .setDuration(animDuration)
+                    .start()
+            }
+            TRANSLATE -> {
+                view.scaleX = 1f
+                view.scaleY = 1f
+                val translate = if (show) 0f else (view.width.toFloat() + view.width / 2)
+                val rotation = if (show) 0f else 360f
+                view.animate().setStartDelay(20).translationX(translate).rotation(rotation).setDuration(animDuration)
+                    .start()
+            }
+
+        }
+
     }
 
     private fun validateCheckIcon(context: Context) {
@@ -209,8 +238,10 @@ class CheckableTextView : RelativeLayout {
     }
 
     fun setText(text: String) {
-        if (emptyNullCheck(text))
+        if (emptyNullCheck(text)) {
             checkedTextTV.text = text
+            checkedTextTV.isSelected = true
+        }
     }
 
     fun setTextGravity(gravity: Int) {
@@ -229,4 +260,21 @@ class CheckableTextView : RelativeLayout {
         if (isValidRes(resId))
             applyTextStyle(resId, context)
     }
+
+    /**
+     * @param animType should be [SCALE] OR [TRANSLATE]
+     */
+    fun setAnimStyle(animType: Int) {
+        animateStyle = when (animType) {
+            SCALE -> SCALE
+            TRANSLATE -> TRANSLATE
+            else -> SCALE
+        }
+    }
+
+    fun setAnimDuration(duration: Long) {
+        if (duration.toInt() == 0 || duration < 0) return
+        animDuration = duration
+    }
+
 }
