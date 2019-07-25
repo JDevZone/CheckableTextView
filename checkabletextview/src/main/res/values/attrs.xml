@@ -9,6 +9,11 @@
 		<attr name="ctv_TextStyle" format="reference|integer"/>
 		<attr name="ctv_Icon" format="reference|integer"/>
 		<attr name="ctv_IconChecked" format="boolean"/>
+		<attr name="ctv_AnimDuration" format="integer"/>
+		<attr name="ctv_AnimType" format="enum">
+			<enum name="scale" value="0"/>
+			<enum name="translate" value="1"/>
+		</attr>
 		<attr name="ctv_TextGravity">
 			<flag name="bottom" value="80" />
 			<flag name="center" value="17" />

@@ -16,6 +16,8 @@
             app:ctv_IconTint="@color/colorPrimary"
             app:ctv_IconChecked="true"
             app:ctv_Text="@string/app_name"
+            app:ctv_AnimDuration="2000"
+            app:ctv_AnimType="translate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -38,6 +40,8 @@
             app:ctv_TextStyle="@style/TextAppearance.General"
             app:ctv_IconTint="@color/colorAccent"
             app:ctv_IconChecked="true"
+            app:ctv_AnimType="scale"
+            app:ctv_AnimDuration="2000"
             app:ctv_Icon="@drawable/ic_cancel_custom_vector"
             app:ctv_Text="@string/app_name"
             android:layout_width="match_parent"
