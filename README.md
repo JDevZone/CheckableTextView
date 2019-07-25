@@ -20,6 +20,17 @@
 [![GitHub license](https://img.shields.io/github/license/JDevZone/CheckableTextView.svg?style=flat)](https://github.com/JDevZone/CheckableTextView/blob/master/LICENSE)
 
 ---------------------------
+### What's New
+
+| Animation | Demo |
+| --- | :---: |
+| <p align="center">Normal </br> (duration = 250 ms)</p> | <img src="sample_01.gif" width="90%"/> |
+| <p align="center">Custom Duration </br> (duration = 2000 ms)</p> | <img src="sample_slowmo.gif" width="90%"  /> |
+	
+> Sorry for flicker in slow motion video demo . You know android studio screen recorder sucks sometimes :sweat_smile:
+
+<br/><br/>
+---------------------------
 ### Installation
 
 1. Add it in your root build.gradle at the end of repositories:
@@ -112,6 +123,8 @@ Here are the attributes you can specify through XML or related setters:
 * `ctv_IconTint` - Set icon tint.
 * `ctv_IconChecked` - Set TextView (`CheckableTextView`) state checked.
 * `ctv_TextGravity` - Set text gravity.
+* `ctv_AnimType` - Set check animation type currently only two available (`scale` and `translate`).
+* `ctv_AnimDuration` - Set duration for check animation.
 
 ### 📄 License
 
