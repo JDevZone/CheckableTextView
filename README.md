@@ -55,8 +55,6 @@
 
 ```xml
 <com.devzone.checkabletextview.CheckableTextView
-            android:layout_marginTop="20dp"
-            android:background="#e8e8e8"
             app:ctv_TextStyle="@style/TextAppearance.General"
             app:ctv_IconTint="@color/colorAccent"
             app:ctv_IconChecked="true"
