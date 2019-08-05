@@ -107,7 +107,11 @@ override fun onCheckChange(view: View, isChecked: Boolean) {
         // isChecked current state of the view
     }
 ```
+### Set Custom Interpolator
 
+```kotlin
+checkedTV.setAnimInterpolator(BounceInterpolator())
+```
 ### Experimental
 
 ```kotlin
