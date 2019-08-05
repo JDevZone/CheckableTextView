@@ -29,6 +29,14 @@
 	
 > Sorry for flicker in slow motion video demo . You know android studio screen recorder sucks sometimes :sweat_smile:
 
+### Custom Interpolators
+> custom interpolator support added
+
+| Interpolator | Demo |
+| --- | :---: |
+| <p align="center">BounceInterpolator </br> with fall down animation</p> | <img src="fall_down.gif" width="90%"/> |
+| <p align="center">AnticipateOvershootInterpolator </br> with translate animation</p> | <img src="overshoot.gif" width="90%"  /> |
+
 <br/><br/>
 ---------------------------
 ### Installation
@@ -121,7 +129,7 @@ Here are the attributes you can specify through XML or related setters:
 * `ctv_IconTint` - Set icon tint.
 * `ctv_IconChecked` - Set TextView (`CheckableTextView`) state checked.
 * `ctv_TextGravity` - Set text gravity.
-* `ctv_AnimType` - Set check animation type currently only two available (`scale` and `translate`).
+* `ctv_AnimType` - Set check animation type currently three available (`scale`,`translate` and `fall_down`).
 * `ctv_AnimDuration` - Set duration for check animation.
 
 ### 📄 License
