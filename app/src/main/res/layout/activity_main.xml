@@ -15,8 +15,9 @@
             app:ctv_TextStyle="@style/TextAppearance.General"
             app:ctv_IconTint="@color/colorPrimary"
             app:ctv_IconChecked="true"
+            android:background="#e8e8e8"
             app:ctv_Text="@string/app_name"
-            app:ctv_AnimDuration="2000"
+            app:ctv_AnimDuration="1250"
             app:ctv_AnimType="translate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -38,10 +39,9 @@
             android:background="#e8e8e8"
             android:id="@+id/checkedSecondTV"
             app:ctv_TextStyle="@style/TextAppearance.General"
-            app:ctv_IconTint="@color/colorAccent"
+
             app:ctv_IconChecked="true"
             app:ctv_AnimType="scale"
-            app:ctv_AnimDuration="2000"
             app:ctv_Icon="@drawable/ic_cancel_custom_vector"
             app:ctv_Text="@string/app_name"
             android:layout_width="match_parent"
@@ -58,6 +58,33 @@
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+
+    <com.devzone.checkabletextview.CheckableTextView
+            android:layout_marginTop="20dp"
+            android:background="#e8e8e8"
+            android:id="@+id/checkedThirdTV"
+            app:ctv_TextStyle="@style/TextAppearance.General"
+            app:ctv_IconTint="@color/colorOrange"
+            app:ctv_IconChecked="true"
+            app:ctv_AnimType="fall_down"
+            app:ctv_Text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/stateThirdTV"
+            android:text="Checked"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            style="@style/TextAppearance.General"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
 
 
 </LinearLayout>
