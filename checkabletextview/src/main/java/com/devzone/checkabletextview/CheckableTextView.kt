@@ -11,14 +11,17 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewPropertyAnimator
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
 import androidx.annotation.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import com.devzone.checkabletextview.utils.AnimatorFactory.Companion.getAnimator
+import com.devzone.checkabletextview.utils.ViewUtils.Companion.getRippleDrawable
+import com.devzone.checkabletextview.utils.ViewUtils.Companion.getThemeAccentColor
+import com.devzone.checkabletextview.utils.ViewUtils.Companion.resetView
 import kotlinx.android.synthetic.main.layout_checkable_text.view.*
-
 
 class CheckableTextView : RelativeLayout {
 
@@ -26,23 +29,32 @@ class CheckableTextView : RelativeLayout {
         const val SCALE = 0
         const val TRANSLATE = 1
         const val FALL_DOWN = 2
+        //-------------------------------------------------------------------------------//
+        const val MIN_VALUE = 0f //(initial values for scale, translate etc.)
+        const val MAX_SCALE = 1f //(max values for scale)
+        const val MAX_ROTATION = 360f //(max values for rotation)
     }
 
-    // default values
+
+    private val defaultAnimFirstTime = true
     private val defaultResValue: Int = 0
     private val defaultAnimDuration: Long = 300
-    private val defaultAnimateStyle: Int = SCALE
-    private val defaultCheckState: Boolean = true
+    private val defaultAnimateStyle = SCALE
+    private val defaultCheckState = true
     private val defaultTextColor = android.R.color.black
     private val defaultCheckIcon = R.drawable.ic_check_circle_vector
 
     //initialise with default values
     private var checkIcon = defaultCheckIcon
-    private var animateStyle = defaultAnimateStyle
-    private var isChecked: Boolean = defaultCheckState
-    private var animDuration: Long = defaultAnimDuration
-    private var animInterpolator: TimeInterpolator = LinearInterpolator()
+    var animInterpolator: TimeInterpolator = LinearInterpolator()
+    var animateFirstTime = defaultAnimFirstTime
 
+    var isChecked = defaultCheckState
+        private set
+    var animDuration = defaultAnimDuration
+        private set
+    var animateStyle = defaultAnimateStyle
+        private set
 
     // check change listeners
     private var listener: CheckedListener? = null  //Legacy type callback listener using interface (Both java & kotlin)
@@ -73,12 +85,29 @@ class CheckableTextView : RelativeLayout {
 
     private fun init(context: Context, attributeSet: AttributeSet?) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-
-        LayoutInflater.from(context).inflate(
+        val root = LayoutInflater.from(context).inflate(
                 R.layout.layout_checkable_text,
                 this, true)
-        attributeSet?.let {
-            val array: TypedArray = context.obtainStyledAttributes(it, R.styleable.CheckableTextView)
+
+        initValuesFromAttrs(attributeSet, context)
+
+        root.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                if (animateFirstTime) {
+                    resetView(animateStyle, checkedIV, !isChecked)
+                    animateView(checkedIV, isChecked)
+                } else
+                    resetView(animateStyle, checkedIV, isChecked)
+
+            }
+        })
+        rootRL.setOnClickListener(clickListener())
+    }
+
+    private fun initValuesFromAttrs(attributeSet: AttributeSet?, context: Context) {
+        attributeSet?.apply {
+            val array: TypedArray = context.obtainStyledAttributes(this, R.styleable.CheckableTextView)
             if (array.length() > 0) {
                 val iconTint = array.getColor(
                     R.styleable.CheckableTextView_ctv_IconTint,
@@ -89,6 +118,8 @@ class CheckableTextView : RelativeLayout {
                     ContextCompat.getColor(context, defaultTextColor)
                 )
                 val text = array.getString(R.styleable.CheckableTextView_ctv_Text)
+                animateFirstTime =
+                    array.getBoolean(R.styleable.CheckableTextView_ctv_AnimFirstTime, defaultAnimFirstTime)
                 isChecked = array.getBoolean(R.styleable.CheckableTextView_ctv_IconChecked, defaultCheckState)
                 val textSize = array.getDimensionPixelSize(R.styleable.CheckableTextView_ctv_TextSize, defaultResValue)
                 val textStyle = array.getResourceId(R.styleable.CheckableTextView_ctv_TextStyle, defaultResValue)
@@ -115,9 +146,6 @@ class CheckableTextView : RelativeLayout {
             }
             array.recycle()
         }
-
-        animateView(checkedIV, isChecked)
-        rootRL.setOnClickListener(clickListener())
     }
 
     private fun clickListener(): (v: View) -> Unit {
@@ -141,48 +169,8 @@ class CheckableTextView : RelativeLayout {
 
     private fun animateView(view: View, show: Boolean) {
         view.clearAnimation()
-        val animator = when (animateStyle) {
-            SCALE -> getScaleAnimator(view, show)
-            TRANSLATE -> getTranslateAnimator(view, show)
-            FALL_DOWN -> getFallDownAnimator(view, show)
-            else -> getScaleAnimator(view, show)
-        }
+        val animator = getAnimator(animateStyle, view, show, animDuration)
         animator.setInterpolator(animInterpolator).start()
-    }
-
-    private fun getScaleAnimator(view: View, show: Boolean): ViewPropertyAnimator {
-        //resetting view to initial state for this animation (if In case user sets new animation on the fly)
-        view.translationX = 0f
-        view.translationY = 0f
-
-        val scale = if (show) 1f else 0f
-        val rotation = if (show) 0f else -360f
-        return view.animate().setStartDelay(20).scaleX(scale).scaleY(scale).rotation(rotation)
-            .setDuration(animDuration)
-    }
-
-    private fun getTranslateAnimator(view: View, show: Boolean): ViewPropertyAnimator {
-        view.scaleX = 1f
-        view.scaleY = 1f
-        view.translationY = 0f
-
-        val translate = if (show) 0f else (view.width.toFloat() + view.width / 2)
-        val rotation = if (show) 0f else 360f
-        return view.animate().setStartDelay(20).translationX(translate).rotation(rotation)
-            .setDuration(animDuration)
-
-    }
-
-    private fun getFallDownAnimator(view: View, show: Boolean): ViewPropertyAnimator {
-        view.scaleX = 1f
-        view.scaleY = 1f
-        view.rotation = 0f
-
-        val trValue = (view.height.toFloat() + view.height / 2)
-        if (show) view.translationY = -trValue
-        val translate = if (show) 0f else trValue
-        return view.animate().setStartDelay(20).translationY(translate)
-            .setDuration(animDuration)
     }
 
     private fun validateCheckIcon(context: Context) {
@@ -197,42 +185,15 @@ class CheckableTextView : RelativeLayout {
         } else checkIcon = defaultCheckIcon
     }
 
-
     private fun isValidRes(res: Int) = res != defaultResValue
-    private fun emptyNullCheck(text: String?) = text != null && !text.isBlank();
+    private fun emptyNullCheck(text: String?) = text != null && !text.isBlank()
 
     private fun notifyListener(isChecked: Boolean) {
         listener?.onCheckChange(this, isChecked)
         listenerNew?.invoke(this, isChecked)
     }
 
-
-    private fun getRippleDrawable(): Int {
-        val outValue = TypedValue()
-        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
-        return outValue.resourceId
-    }
-
-    private fun getThemeAccentColor(context: Context): String {
-        try {
-            val colorAttr: Int
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                colorAttr = android.R.attr.colorAccent
-            } else {
-                //Get colorAccent defined for AppCompat
-                colorAttr = context.resources.getIdentifier("colorAccent", "attr", context.packageName)
-            }
-            val outValue = TypedValue()
-            context.theme.resolveAttribute(colorAttr, outValue, true)
-            return String.format("#%06X", 0xFFFFFF and outValue.data)
-        } catch (e: Exception) {
-            return "#00FFFFFF"
-        }
-    }
-
     /*-------------------------------------------------public functions------------------------------------------------------------------------------------------*/
-
-
 
     /**
      * Change [CheckableTextView] click state
@@ -242,7 +203,7 @@ class CheckableTextView : RelativeLayout {
     fun setClickEnabled(isClickable: Boolean) {
         // 0.5 second delay added to ongoing ripple animation to complete (if any)
         rootRL.postDelayed(
-            { rootRL.setBackgroundResource(if (isClickable) getRippleDrawable() else android.R.color.transparent) },
+            { rootRL.setBackgroundResource(if (isClickable) getRippleDrawable(context) else android.R.color.transparent) },
             500
         )
         rootRL.setOnClickListener(if (isClickable) clickListener() else null)
@@ -253,26 +214,17 @@ class CheckableTextView : RelativeLayout {
         this.listenerNew = null
     }
 
-
     fun setOnCheckChangeListener(listenerNew: (view: View, isChecked: Boolean) -> Unit) {
         this.listener = null
         this.listenerNew = listenerNew
     }
 
-    fun setChecked(isChecked: Boolean, shouldNotifyListeners: Boolean=false) {
+    fun setChecked(isChecked: Boolean, shouldNotifyListeners: Boolean = false) {
         this.isChecked = isChecked
         animateView(checkedIV, isChecked)
         if (shouldNotifyListeners)
             notifyListener(isChecked)
     }
-
-
-    fun isChecked(): Boolean {
-        return this.isChecked
-    }
-
-
-    ////---------------------------setters------------------------------------------------------------------------------------------////
 
     fun setIconTint(@ColorRes resId: Int) {
         if (isValidRes(resId)) {
@@ -330,21 +282,12 @@ class CheckableTextView : RelativeLayout {
      * @param animType should be [SCALE],[TRANSLATE],[FALL_DOWN]
      */
     fun setAnimStyle(animType: Int) {
-        animateStyle = when (animType) {
-            SCALE -> SCALE
-            TRANSLATE -> TRANSLATE
-            FALL_DOWN -> FALL_DOWN
-            else -> SCALE
-        }
+        animateStyle = if (animType in SCALE..FALL_DOWN) animType else animateStyle
     }
 
     fun setAnimDuration(duration: Long) {
-        if (duration.toInt() == 0 || duration < 0) return
+        if (duration == 0L || duration < 0) return
         animDuration = duration
-    }
-
-    fun setAnimInterpolator(interpolator: TimeInterpolator) {
-        animInterpolator = interpolator
     }
 
 }
