@@ -135,6 +135,7 @@ Here are the attributes you can specify through XML or related setters:
 * `ctv_TextGravity` - Set text gravity.
 * `ctv_AnimType` - Set check animation type currently three available (`scale`,`translate` and `fall_down`).
 * `ctv_AnimDuration` - Set duration for check animation.
+* `ctv_AnimFirstTime` - Animate `CheckableTextView` for very first time.
 
 ### 📄 License
 
