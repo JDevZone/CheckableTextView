@@ -10,6 +10,7 @@
 		<attr name="ctv_Icon" format="reference|integer"/>
 		<attr name="ctv_IconChecked" format="boolean"/>
 		<attr name="ctv_AnimDuration" format="integer"/>
+		<attr name="ctv_AnimFirstTime" format="boolean"/>
 		<attr name="ctv_AnimType" format="enum">
 			<enum name="scale" value="0"/>
 			<enum name="translate" value="1"/>
