@@ -10,12 +10,11 @@ class ViewUtils {
     companion object{
          fun getThemeAccentColor(context: Context): String {
             return try {
-                val colorAttr: Int
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    colorAttr = android.R.attr.colorAccent
+                val colorAttr: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    android.R.attr.colorAccent
                 } else {
                     //Get colorAccent defined for AppCompat
-                    colorAttr = context.resources.getIdentifier("colorAccent", "attr", context.packageName)
+                    context.resources.getIdentifier("colorAccent", "attr", context.packageName)
                 }
                 val outValue = TypedValue()
                 context.theme.resolveAttribute(colorAttr, outValue, true)
@@ -62,3 +61,4 @@ class ViewUtils {
 
     }
 }
+

@@ -7,6 +7,18 @@
         android:background="?android:selectableItemBackground"
         android:layout_height="wrap_content">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fillIV"
+        android:layout_margin="4dp"
+        android:padding="2dp"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:layout_centerVertical="true"
+        android:background="@drawable/fill_circle"
+        android:layout_alignParentEnd="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+
     <androidx.appcompat.widget.AppCompatTextView
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -22,6 +34,7 @@
             android:text="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
 
     <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/checkedIV"

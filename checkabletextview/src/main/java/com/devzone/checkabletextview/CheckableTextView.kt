@@ -2,6 +2,7 @@ package com.devzone.checkabletextview
 
 import android.animation.TimeInterpolator
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,11 +13,14 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
 import androidx.annotation.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.ViewCompat
 import com.devzone.checkabletextview.utils.AnimatorFactory.Companion.getAnimator
 import com.devzone.checkabletextview.utils.ViewUtils.Companion.getRippleDrawable
 import com.devzone.checkabletextview.utils.ViewUtils.Companion.getThemeAccentColor
@@ -29,6 +33,7 @@ class CheckableTextView : RelativeLayout {
         const val SCALE = 0
         const val TRANSLATE = 1
         const val FALL_DOWN = 2
+
         //-------------------------------------------------------------------------------//
         const val MIN_VALUE = 0f //(initial values for scale, translate etc.)
         const val MAX_SCALE = 1f //(max values for scale)
@@ -36,6 +41,8 @@ class CheckableTextView : RelativeLayout {
     }
 
 
+    private var rippleTint: Int = Color.LTGRAY
+    private var rippleAlpha: Int = 33
     private val defaultAnimFirstTime = true
     private val defaultResValue: Int = 0
     private val defaultAnimDuration: Long = 300
@@ -49,6 +56,9 @@ class CheckableTextView : RelativeLayout {
     var animInterpolator: TimeInterpolator = LinearInterpolator()
     var animateFirstTime = defaultAnimFirstTime
 
+    var isRippleFillEnabled = false
+        private set
+
     var isChecked = defaultCheckState
         private set
     var animDuration = defaultAnimDuration
@@ -57,7 +67,8 @@ class CheckableTextView : RelativeLayout {
         private set
 
     // check change listeners
-    private var listener: CheckedListener? = null  //Legacy type callback listener using interface (Both java & kotlin)
+    private var listener: CheckedListener? =
+        null  //Legacy type callback listener using interface (Both java & kotlin)
 
     /**
      * [Function],[Function2] (for two variables)
@@ -109,6 +120,12 @@ class CheckableTextView : RelativeLayout {
         attributeSet?.apply {
             val array: TypedArray = context.obtainStyledAttributes(this, R.styleable.CheckableTextView)
             if (array.length() > 0) {
+
+                rippleTint = array.getColor(
+                    R.styleable.CheckableTextView_ctv_RippleTint,
+                    Color.parseColor(getThemeAccentColor(context))
+                )
+
                 val iconTint = array.getColor(
                     R.styleable.CheckableTextView_ctv_IconTint,
                     Color.parseColor(getThemeAccentColor(context))
@@ -119,15 +136,36 @@ class CheckableTextView : RelativeLayout {
                 )
                 val text = array.getString(R.styleable.CheckableTextView_ctv_Text)
                 animateFirstTime =
-                    array.getBoolean(R.styleable.CheckableTextView_ctv_AnimFirstTime, defaultAnimFirstTime)
-                isChecked = array.getBoolean(R.styleable.CheckableTextView_ctv_IconChecked, defaultCheckState)
-                val textSize = array.getDimensionPixelSize(R.styleable.CheckableTextView_ctv_TextSize, defaultResValue)
-                val textStyle = array.getResourceId(R.styleable.CheckableTextView_ctv_TextStyle, defaultResValue)
-                checkIcon = array.getResourceId(R.styleable.CheckableTextView_ctv_Icon, defaultResValue)
-                val gravity = array.getInt(R.styleable.CheckableTextView_ctv_TextGravity, Gravity.CENTER)
+                    array.getBoolean(
+                        R.styleable.CheckableTextView_ctv_AnimFirstTime,
+                        defaultAnimFirstTime
+                    )
+                isChecked = array.getBoolean(
+                    R.styleable.CheckableTextView_ctv_IconChecked,
+                    defaultCheckState
+                )
+                isRippleFillEnabled =
+                    array.getBoolean(R.styleable.CheckableTextView_ctv_RippleFillEnabled, false)
+                val textSize = array.getDimensionPixelSize(
+                    R.styleable.CheckableTextView_ctv_TextSize,
+                    defaultResValue
+                )
+                val textStyle = array.getResourceId(
+                    R.styleable.CheckableTextView_ctv_TextStyle,
+                    defaultResValue
+                )
+                checkIcon =
+                    array.getResourceId(R.styleable.CheckableTextView_ctv_Icon, defaultResValue)
+                val gravity =
+                    array.getInt(R.styleable.CheckableTextView_ctv_TextGravity, Gravity.CENTER)
                 animateStyle = array.getInt(R.styleable.CheckableTextView_ctv_AnimType, SCALE)
+                rippleAlpha = array.getInt(R.styleable.CheckableTextView_ctv_RippleAlpha, 33)
+                normalizeRippleAlpha()
                 val animDuration =
-                    array.getInt(R.styleable.CheckableTextView_ctv_AnimDuration, defaultAnimDuration.toInt()).toLong()
+                    array.getInt(
+                        R.styleable.CheckableTextView_ctv_AnimDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
                 setAnimDuration(animDuration)
 
                 //giving applied style attrs least preference (colors n text size will be override by ctv_TextColor & ctv_TextSize as applied later)
@@ -146,6 +184,13 @@ class CheckableTextView : RelativeLayout {
             }
             array.recycle()
         }
+    }
+
+    private fun normalizeRippleAlpha() {
+        if (rippleAlpha < 0)
+            rippleAlpha = 0
+        if (rippleAlpha > 255)
+            rippleAlpha = 255
     }
 
     private fun clickListener(): (v: View) -> Unit {
@@ -169,8 +214,28 @@ class CheckableTextView : RelativeLayout {
 
     private fun animateView(view: View, show: Boolean) {
         view.clearAnimation()
+        if (isRippleFillEnabled)
+            triggerFillAnimation(show)
         val animator = getAnimator(animateStyle, view, show, animDuration)
         animator.setInterpolator(animInterpolator).start()
+    }
+
+    private fun triggerFillAnimation(show: Boolean) {
+        if (rippleAlpha <= 0) return
+        val scale = if (show) width * 2f / fillIV.width else 0f
+        val delay = if (show) animDuration / 2 else 0
+        ViewCompat.setBackgroundTintList(
+            fillIV,
+            ColorStateList.valueOf(
+                ColorUtils.setAlphaComponent(
+                    rippleTint, rippleAlpha
+                )
+            )
+        )
+        fillIV.animate().setStartDelay(delay).scaleX(scale).scaleY(scale)
+            .setDuration((animDuration * 1f / 1.1).toLong())
+            .setInterpolator(AccelerateInterpolator())
+            .start()
     }
 
     private fun validateCheckIcon(context: Context) {
@@ -226,11 +291,33 @@ class CheckableTextView : RelativeLayout {
             notifyListener(isChecked)
     }
 
-    fun setIconTint(@ColorRes resId: Int) {
-        if (isValidRes(resId)) {
-            val color = ContextCompat.getColor(context, resId)
-            checkedIV.setColorFilter(color)
+    fun setRippleFillEnabled(isEnabled: Boolean) {
+        this.isRippleFillEnabled = isEnabled
+    }
+
+    fun setRippleTint(color: Int) {
+        val extractedColor = try {
+            ContextCompat.getColor(context, color)
+        } catch (e: Exception) {
+            color
         }
+        setRippleFillEnabled(true)
+        rippleTint = extractedColor
+    }
+
+    fun setRippleAlpha(alpha: Int) {
+        this.rippleAlpha = alpha
+        normalizeRippleAlpha()
+    }
+
+    fun setIconTint(color: Int) {
+        val extractedColor = try {
+            ContextCompat.getColor(context, color)
+        } catch (e: Exception) {
+            color
+        }
+        checkedIV.setColorFilter(extractedColor)
+
     }
 
     fun setTextSize(@DimenRes resId: Int) {
@@ -240,11 +327,14 @@ class CheckableTextView : RelativeLayout {
         }
     }
 
-    fun setTextColor(@ColorRes resId: Int) {
-        if (isValidRes(resId)) {
-            val color = ContextCompat.getColor(context, resId)
-            checkedTextTV.setTextColor(color)
+    fun setTextColor(color: Int) {
+        val extractedColor = try {
+            ContextCompat.getColor(context, color)
+        } catch (e: Exception) {
+            color
         }
+        checkedTextTV.setTextColor(extractedColor)
+
     }
 
     fun setText(@StringRes resId: Int) {

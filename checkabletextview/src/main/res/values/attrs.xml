@@ -2,13 +2,16 @@
 <resources>
 	
 	<declare-styleable name="CheckableTextView">
-		<attr name="ctv_IconTint" format="color"/>
 		<attr name="ctv_TextSize" format="dimension"/>
 		<attr name="ctv_TextColor" format="color"/>
 		<attr name="ctv_Text" format="string"/>
 		<attr name="ctv_TextStyle" format="reference|integer"/>
+		<attr name="ctv_IconTint" format="color"/>
 		<attr name="ctv_Icon" format="reference|integer"/>
 		<attr name="ctv_IconChecked" format="boolean"/>
+		<attr name="ctv_RippleAlpha" format="integer"/><!--value should be between 0-255-->
+		<attr name="ctv_RippleTint" format="color"/>
+		<attr name="ctv_RippleFillEnabled" format="boolean"/>
 		<attr name="ctv_AnimDuration" format="integer"/>
 		<attr name="ctv_AnimFirstTime" format="boolean"/>
 		<attr name="ctv_AnimType" format="enum">
