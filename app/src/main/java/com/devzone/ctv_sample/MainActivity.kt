@@ -1,12 +1,12 @@
 package com.devzone.ctv_sample
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnticipateOvershootInterpolator
 import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import com.devzone.checkabletextview.CheckableTextView
 import com.devzone.checkabletextview.CheckableTextView.Companion.SCALE
 import com.devzone.checkabletextview.CheckableTextView.Companion.TRANSLATE
 import com.devzone.checkabletextview.CheckedListener
@@ -18,7 +18,9 @@ class MainActivity : AppCompatActivity(), CheckedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        checkedTV.setOnCheckChangeListener { view, isChecked -> stateTV.text = if (isChecked) "Checked" else "Unchecked"}
+        checkedTV.setOnCheckChangeListener { _, isChecked ->
+            stateTV.text = if (isChecked) "Checked" else "Unchecked"
+        }
         checkedSecondTV.setOnCheckChangeListener(::checkHandler) // function as parameter
         checkedThirdTV.setOnCheckChangeListener(this@MainActivity)
 
@@ -28,6 +30,8 @@ class MainActivity : AppCompatActivity(), CheckedListener {
         checkedThirdTV.animInterpolator = BounceInterpolator()
 
         checkedThirdTV.setAnimDuration(1000)
+        checkedThirdTV.setRippleTint(Color.parseColor("#ff9900"))
+        checkedSecondTV.setAnimDuration(1000)
     }
 
     private fun checkHandler(view: View, isChecked: Boolean) {

@@ -10,33 +10,41 @@
         tools:context=".MainActivity">
 
     <com.devzone.checkabletextview.CheckableTextView
-            android:layout_marginTop="20dp"
-            android:id="@+id/checkedTV"
-            app:ctv_TextStyle="@style/TextAppearance.General"
-            app:ctv_IconTint="@color/colorPrimary"
-            app:ctv_IconChecked="false"
-            android:background="#e8e8e8"
-            app:ctv_Text="@string/app_name"
-            app:ctv_AnimDuration="1250"
-            app:ctv_AnimType="translate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/checkedTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#e8e8e8"
+        app:ctv_AnimDuration="1250"
+        app:ctv_AnimType="translate"
+        app:ctv_IconChecked="false"
+        app:ctv_IconTint="@color/colorPrimary"
+        app:ctv_RippleFillEnabled="true"
+        app:ctv_Text="@string/app_name"
+        app:ctv_TextStyle="@style/TextAppearance.General" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:layout_marginTop="5dp"
-            android:id="@+id/stateTV"
-            android:text="Checked"
-            android:padding="5dp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            style="@style/TextAppearance.General"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/stateTV"
+        style="@style/TextAppearance.General"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Checked" />
 
-    <com.devzone.checkabletextview.CheckableTextView
-            android:layout_marginTop="20dp"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true">
+
+        <com.devzone.checkabletextview.CheckableTextView
             android:background="#e8e8e8"
+            android:layout_height="wrap_content"
             android:id="@+id/checkedSecondTV"
             app:ctv_TextStyle="@style/TextAppearance.General"
             app:ctv_IconChecked="false"
@@ -44,32 +52,34 @@
             app:ctv_Icon="@drawable/ic_cancel_custom_vector"
             app:ctv_Text="@string/app_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            app:ctv_RippleFillEnabled="true" />
+    </com.google.android.material.card.MaterialCardView>
 
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/stateSecondTV"
-            android:text="Checked"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            style="@style/TextAppearance.General"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/stateSecondTV"
+        style="@style/TextAppearance.General"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Checked" />
 
 
     <com.devzone.checkabletextview.CheckableTextView
-            android:layout_marginTop="20dp"
-            android:background="#e8e8e8"
-            android:id="@+id/checkedThirdTV"
-            app:ctv_TextStyle="@style/TextAppearance.General"
-            app:ctv_IconTint="@color/colorOrange"
-            app:ctv_IconChecked="false"
-            app:ctv_AnimType="fall_down"
-            app:ctv_Text="@string/app_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/checkedThirdTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#e8e8e8"
+        app:ctv_AnimType="fall_down"
+        app:ctv_IconChecked="false"
+        app:ctv_IconTint="@color/colorOrange"
+        app:ctv_RippleFillEnabled="true"
+        app:ctv_Text="@string/app_name"
+        app:ctv_TextStyle="@style/TextAppearance.General" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
