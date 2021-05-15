@@ -28,6 +28,7 @@
 
 | Animation | Demo |
 | --- | :---: |
+| <p align="center">New Ripple Like Fill Effect</p> | <img src="new_ripple_effect.gif" width="90%"/> |
 | <p align="center">Normal </br> (duration = 250 ms)</p> | <img src="sample_01.gif" width="90%"/> |
 | <p align="center">Custom Duration </br> (duration = 2000 ms)</p> | <img src="sample_slowmo.gif" width="90%"  /> |
 	
@@ -140,6 +141,10 @@ Here are the attributes you can specify through XML or related setters:
 * `ctv_AnimType` - Set check animation type currently three available (`scale`,`translate` and `fall_down`).
 * `ctv_AnimDuration` - Set duration for check animation.
 * `ctv_AnimFirstTime` - Animate `CheckableTextView` for very first time.
+* `ctv_RippleAlpha` - Set Alpha (Transparency) value for ripple like fill effect
+* `ctv_RippleTint` - Set color value for ripple like fill effect
+* `ctv_RippleFillEnabled` - Sets if ripple like fill effect is enabled or not
+
 
 ### 📄 License
 
