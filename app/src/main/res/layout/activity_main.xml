@@ -43,7 +43,6 @@
         app:cardUseCompatPadding="true">
 
         <com.devzone.checkabletextview.CheckableTextView
-            android:background="#e8e8e8"
             android:layout_height="wrap_content"
             android:id="@+id/checkedSecondTV"
             app:ctv_TextStyle="@style/TextAppearance.General"
